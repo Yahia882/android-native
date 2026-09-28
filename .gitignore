@@ -1,0 +1,36 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Missing Build Artifacts
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Additional Module Build Folders
+/*/build
+
+# Modern Android Studio / IntelliJ UI states
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/dictionaries
+.idea/deploymentTargetSelector.xml
+.idea/deploymentTargetDropdown.xml
+.idea/kotlinc.xml
+.idea/migrations.xml
+
+# Secrets (Keep your private API keys out of GitHub!)
+secrets.properties
