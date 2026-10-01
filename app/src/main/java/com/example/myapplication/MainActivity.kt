@@ -4,48 +4,33 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+// IMPORT: Connects your main file to the separate login file you created
+import com.example.myapplication.ui.screens.LoginScreen
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 1. Configures your app layout to flow safely edge-to-edge behind system bars
         enableEdgeToEdge()
+
         setContent {
+            // 2. Wraps your app in the global Material Design theme
             MyApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Yahia",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+
+                // 3. Launches your custom styled Login Screen
+                LoginScreen(
+                    onBackClick = {
+                        // Exits the application if the back button is pressed
+                        finish()
+                    },
+                    onLoginSuccess = {
+                        // TODO: Handle navigation to your home/dashboard screen later
+                    }
+                )
+
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(color = Color.Red) {
-        Text(
-            text = "Hello my name is $name!",
-            modifier = modifier
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MyApplicationTheme {
-        Greeting("Yahia")
     }
 }
