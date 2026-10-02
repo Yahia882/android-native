@@ -1,47 +1,32 @@
 package com.example.myapplication.ui.screens
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
     onBackClick: () -> Unit,
-    onNavigateToSignIn: () -> Unit,
     onSignUpSuccess: () -> Unit
 ) {
+    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Create Account") },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface
-                )
-            )
-        }
-    ) { innerPadding ->
+    val isFormValid = name.isNotBlank() &&
+            email.isNotBlank() &&
+            password.isNotBlank() &&
+            password == confirmPassword
+
+    Scaffold { innerPadding ->
         Surface(
             modifier = Modifier
                 .fillMaxSize()
@@ -57,7 +42,7 @@ fun SignUpScreen(
                         .fillMaxWidth(0.9f)
                         .wrapContentHeight(),
                     shape = RoundedCornerShape(24.dp),
-                    color = MaterialTheme.colorScheme.surfaceContainer,
+                    color = MaterialTheme.colorScheme.background,
                     tonalElevation = 0.dp
                 ) {
                     Column(
@@ -68,9 +53,18 @@ fun SignUpScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(
-                            text = "Get Started",
+                            text = "Create Account",
                             style = MaterialTheme.typography.headlineMedium,
                             color = MaterialTheme.colorScheme.onSurface
+                        )
+
+                        OutlinedTextField(
+                            value = name,
+                            onValueChange = { name = it },
+                            label = { Text("Full Name") },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+                            shape = RoundedCornerShape(24.dp)
                         )
 
                         OutlinedTextField(
@@ -106,35 +100,23 @@ fun SignUpScreen(
 
                         Button(
                             onClick = onSignUpSuccess,
+                            enabled = isFormValid,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(50.dp),
                             shape = RoundedCornerShape(12.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Black,
-                                contentColor = Color.White
+                                containerColor = Color(0xFF232323),
+                                contentColor = Color.White,
+                                disabledContainerColor = Color.DarkGray,
+                                disabledContentColor = Color.LightGray
                             )
                         ) {
                             Text("Sign Up", style = MaterialTheme.typography.labelLarge)
                         }
 
-                        // Navigation Link to Sign In Page
-                        Row(
-                            modifier = Modifier.padding(top = 8.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = "Already have an account? ",
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                            Text(
-                                text = "Sign In",
-                                color = MaterialTheme.colorScheme.primary,
-                                style = MaterialTheme.typography.bodyMedium,
-                                textDecoration = TextDecoration.Underline,
-                                modifier = Modifier.clickable { onNavigateToSignIn() }
-                            )
+                        TextButton(onClick = onBackClick) {
+                            Text("Already have an account? Sign In")
                         }
                     }
                 }
