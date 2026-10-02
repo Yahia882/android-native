@@ -21,22 +21,6 @@ fun LoginScreen(onBackClick: () -> Unit, onLoginSuccess: () -> Unit) {
     var password by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Sign In") },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                // MODERN UPDATE: Clean top bar surface that matches modern dark layouts
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface
-                )
-            )
-        }
     ) { innerPadding ->
 
         Surface(
@@ -66,6 +50,12 @@ fun LoginScreen(onBackClick: () -> Unit, onLoginSuccess: () -> Unit) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
+                        Text(
+                            text = "Sign In",
+                            style = MaterialTheme.typography.headlineMedium,
+                            // MODERN UPDATE: Reads content text color over the container surface safely
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
 
                         // Email Field (Automatically styled via MaterialTheme definitions)
                         // Email Field
